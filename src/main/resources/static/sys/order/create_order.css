@@ -1,0 +1,9 @@
+.layui-form-item{
+    margin-top: 15px;
+}
+.layui-form-label{
+    padding: 9px 0;
+}
+.layui-form-item .layui-inline{
+    margin-right: 0;
+}

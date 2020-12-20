@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.eshop.mapper.UserInfoMapper">
+
+   <select id="selectByPage" resultType="com.eshop.pojo.UserInfo" parameterType="com.eshop.pojo.UserInfo">
+       select * from user_info where 1=1
+        <if test="username != null and username != ''">
+            and userName like concat('%',#{username},'%')
+        </if>
+   </select>
+    <select id="count" resultType="_int" parameterType="com.eshop.pojo.UserInfo">
+        select count(*) from user_info where 1=1
+        <if test="username != null and username != ''">
+            and userName like concat('%',#{userName},'%')
+        </if>
+    </select>
+    <update id="updateState" parameterType="java.util.List">
+        update user_info set status=#{flag} where id in
+--         ids是dao的变量名，index是下标，item跟标签内的item对应
+        <foreach collection="ids" index="index" item="item" open="(" separator="," close=")">
+            #{item}
+        </foreach>
+    </update>
+    <select id="getUserInfoById" resultType="com.eshop.pojo.UserInfo">
+        select * from user_info where id =#{id}
+    </select>
+
+</mapper>

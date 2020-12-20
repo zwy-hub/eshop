@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>后台管理页面</title>
+    <!-- 引入公用部分 -->
+    <script th:replace="common/head::static"></script>
+
+</head>
+<body class="layui-layout-body">
+<div class="layui-layout layui-layout-admin">
+    <div class="layui-header">
+        <div class="layui-logo">后台管理页面</div>
+
+        <ul class="layui-nav layui-layout-left">
+            <li class="layui-nav-item my-menu" ><a href="javascript:;"></a></li>
+            <li class="layui-nav-item">
+                <a class="my-menu" data-id="201" href="javascript:;"></a>
+            </li>
+            <li class="layui-nav-item"></li>
+            <li class="layui-nav-item"></li>
+        </ul>
+        <ul class="layui-nav layui-layout-right">
+            <li class="layui-nav-item"><a>欢迎你，[[${session.name}]]</a></li>
+            <li class="layui-nav-item"><a th:href="@{/logout}">退出</a></li>
+        </ul>
+    </div>
+    <div class="layui-side layui-bg-black">
+        <div class="layui-side-scroll">
+            <ul class="layui-nav layui-nav-tree">
+                <div th:each="menu,iterStat:${session.tree}">
+                    <li class="layui-nav-item layui-nav-itemed" th:unless="${#lists.size(menu.children)} eq 0">
+                        <a href="javascript:;" th:text="${menu.text}"></a>
+                        <dl class="layui-nav-child" th:each="item,iterStat:${menu.children}">
+                            <dd><a class="my-menu" th:data-url="${item.url}" th:data-id="${item.id}" href="javascript:;" th:text="${item.text}"></a></dd>
+                        </dl>
+                    </li>
+                    <li class="layui-nav-item" th:if="${#lists.size(menu.children)} eq 0">
+                        <a class="my-menu" th:data-url="${menu.url}" th:data-id="${menu.id}" th:text="${menu.text}" href="javascript:;">XXX</a>
+                    </li>
+                </div>
+            </ul>
+        </div>
+    </div>
+    <div class="layui-body">
+        <!-- 内容主体区域 -->
+        <div id="content">
+            <h1>作者：zwy</h1>
+            <div class="slideshow">
+<!--                <div class="slideshow-image" style="background-image: url('')"></div>-->
+<!--                <div class="slideshow-image" style="background-image: url('')"></div>-->
+<!--                <div class="slideshow-image" style="background-image: url('')"></div>-->
+<!--                <div class="slideshow-image" style="background-image: url('')"></div>-->
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    // layui.use('element', function () {
+    //     let element = layui.element;
+    //
+    //     $("body").on("click", ".my-menu", function (e) {
+    //         let url = $(this).data("url");
+    //         let id = $(this).data("id");
+    //         let text = $(this).text();
+    //         //如果不存在m
+    //         if ($(".layui-tab-title").find("li[lay-id='" + id + "']").length <= 0) {
+    //             let height = document.documentElement.clientHeight - 160 + "px";
+    //             element.tabAdd('demo', {
+    //                 title: text,
+    //                 //iframe子页面onload新增监听src为/loginPage是父页面跳转/loginPage，解决“俄罗斯套娃”问题
+    //                 content: "<iframe onload='if(this.contentWindow.location.pathname == \""+"/loginPage\"){window.location.href = \""+"/loginPage\"} $(this)[0].height = document.documentElement.clientHeight-160' width='100%' height='" + height + "' frameborder='0' scrolling='auto' src=\"" + url + "\"></iframe>",
+    //                 id: id
+    //             });
+    //         }
+    //         element.tabChange('demo', id);
+    //     });
+    // });
+</script>
+</body>
+</html>

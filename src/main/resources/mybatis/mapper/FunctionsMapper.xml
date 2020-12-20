@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.eshop.mapper.FunctionsMapper">
+    <resultMap id="functions" type="com.eshop.pojo.Functions">
+        <id property="id" column="id"/>
+        <result property="name" column="name"/>
+        <result property="parentId" column="parentid"/>
+        <result property="isLeaf" column="isLeaf"/>
+    </resultMap>
+    <select id="selectByAdminId" resultMap="functions">
+        select * from functions where id in (
+        select fid from powers where aid = #{aid})
+    </select>
+    <select id="all" resultMap="functions">
+        select * from functions
+    </select>
+</mapper>

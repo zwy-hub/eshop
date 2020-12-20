@@ -1,0 +1,99 @@
+<link rel="stylesheet" href="/sys/order/create_order.css">
+
+<div class="layui-layout layui-layout-admin" style="padding: 20px">
+    <div class="layui-body">
+        <div>
+            <form class="layui-form" action="" lay-filter="example">
+                <div class="layui-form-item">
+                    <div class="layui-inline">
+                        <label class="layui-form-label">客户编号</label>
+                        <div class="layui-input-block">
+                            <input onblur="existUser()" type="text" id="orderUserId" autocomplete="off" class="layui-input">
+                        </div>
+                    </div>
+                    <div class="layui-inline">
+                        <label class="layui-form-label">客户姓名</label>
+                        <div class="layui-input-block">
+                            <input disabled="disabled" type="text" id="orderUsername" autocomplete="off" class="layui-input">
+                        </div>
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <div class="layui-inline">
+                        <label class="layui-form-label">订单状态</label>
+                        <div class="layui-input-block">
+                            <select id="orderStatus" >
+                                <option value="">请选择</option>
+                                <option value="已付款">已付款</option>
+                                <option value="待付款">待付款</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="layui-inline">
+                        <label class="layui-form-label">订单时间</label>
+                        <div class="layui-input-block">
+                            <input type="text" id="orderTime" lay-verify="date" autocomplete="off" class="layui-input">
+                        </div>
+                    </div>
+                    <div class="layui-inline">
+                        <label class="layui-form-label">订单金额</label>
+                        <div class="layui-input-block">
+                            <input disabled="disabled" type="text" id="orderPrice" autocomplete="off" class="layui-input">
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+
+        <div style="margin: 0 20px">
+            <!--监听商品详情表格按钮-->
+            <div class="layui-btn-group demoTable">
+                <button class="layui-btn" data-type="addOrderDetail">添加订单明细</button>
+                <button class="layui-btn" data-type="saveOrder">保存订单</button>
+                <button class="layui-btn" data-type="delOrderDetail">删除订单明细</button>
+            </div>
+            <!--商品详情表格-->
+            <table class="layui-hide" id="orderDetailTable" lay-filter="orderDetailTable"></table>
+        </div>
+
+        <!--添加商品详情表单-->
+        <div  id="addOrderDetail" class="layer_self_wrap" style="padding:20px;display:none;">
+            <form class="layui-form layui-form-pane" action="">
+                <div class="layui-form-item">
+                    <label class="layui-form-label">商品编码</label>
+                    <div class="layui-input-inline">
+                        <input onblur="existProduct()" id="productCode" name="productCode" lay-verify="required" autocomplete="off" class="layui-input" type="text"/>
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <label class="layui-form-label">商品名称</label>
+                    <div class="layui-input-inline">
+                        <input disabled="disabled" id="productName" name="productName" lay-verify="required" autocomplete="off" class="layui-input" type="text"/>
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <label class="layui-form-label">商品价格</label>
+                    <div class="layui-input-inline">
+                        <input disabled="disabled" id="productPrice" name="productPrice" lay-verify="number" autocomplete="off" class="layui-input" type="text"/>
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <label class="layui-form-label">购买数量</label>
+                    <div class="layui-input-inline">
+                        <input id="productNum" name="productNum" lay-verify="number" autocomplete="off" class="layui-input" type="text"/>
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <div class="layui-input-block" style="margin-left: 10px;text-align: center">
+                        <button class="layui-btn" lay-submit="" lay-filter="productSubmit">提交</button>
+                        <button type="reset" class="layui-btn layui-btn-primary">重置</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+<script src="/sys/order/create_order.js"></script>
+<script type="text/html" id="aPrice">
+    {{ d.productNum*d.productPrice }}
+</script>

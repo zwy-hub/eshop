@@ -1,0 +1,68 @@
+<link rel="stylesheet" href="/sys/user/admin.css">
+
+<div class="layui-layout layui-layout-admin" style="padding: 20px">
+    <div class="layui-body">
+        <div class="layui-row layui-col-space15">
+<!--            管理员列表-->
+            <div class="layui-col-md6">
+                <div class="layui-card">
+                    <div class="layui-card-header">管理员列表</div>
+                    <div class="layui-card-body">
+                        <table class="layui-hide" id="adminTable" lay-filter="adminTable"></table>
+                        <script type="text/html" id="adminTableToolbarDemo">
+                            <div class="layui-btn-container">
+                                <button class="layui-btn layui-btn-sm" lay-event="add">新增<i class="layui-icon layui-icon-add-1"></i></button>
+                                <input type="text" id="adminName" name="adminName" autocomplete="off"
+                                       placeholder="输入登陆名" class="layui-input layui-btn-sm">
+                                <button class="layui-btn layui-btn-sm" lay-event="search">查询<i class="layui-icon layui-icon-search"></i></button>
+                            </div>
+                        </script>
+                        <script type="text/html" id="adminTableBarDemo">
+                            <a class="layui-btn layui-btn-xs" lay-event="edit">编辑<i class="layui-icon layui-icon-edit"></i></a>
+                            <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除<i class="layui-icon layui-icon-close"></i></a>
+                        </script>
+                    </div>
+                </div>
+            </div>
+<!--            操作表单-->
+            <div class="layui-col-md6">
+                <div class="layui-card">
+                    <div class="layui-card-header">操作表单</div>
+                    <div class="layui-card-body">
+                        <form id="adminForm" class="layui-form layui-form-pane">
+                            <input type="text" id="id" name="id" hidden="hidden"/>
+                            <div class="layui-form-item">
+                                <label class="layui-form-label">用户名</label>
+                                <div class="layui-input-block">
+                                    <input type="text" id="name" name="name" autocomplete="off" placeholder="登录名" class="layui-input">
+                                </div>
+                            </div>
+                            <div class="layui-form-item">
+                                <label class="layui-form-label">密码</label>
+                                <div class="layui-input-block">
+                                    <a class="layui-btn layui-btn-sm" onclick="resetPassword()">重置密码</a>
+                                    <div class="layui-form-mid layui-word-aux" style="float: unset; margin-left: 10px;">
+                                        初始、重置密码：123456</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                        <div class="layui-form-item">
+                            <fieldset class="layui-elem-field layui-field-title" style="margin-top: 20px;">
+                                <legend>管理员权限菜单</legend>
+                            </fieldset>
+                            <div id="adminMenuTree" class="demo-tree demo-tree-box layui-col-md6"
+                                 style="height: 300px; overflow: scroll;"></div>
+                        </div>
+                        <div class="layui-form-item">
+                            <div class="layui-input-block">
+                                <a class="layui-btn" onclick="adminFormSave()">保存</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="/sys/user/admin.js"></script>

@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.eshop.mapper.ProductInfoMapper">
+
+    <resultMap id="selectWithParam" type="com.eshop.pojo.ProductInfo">
+        <id property="id" column="id"/>
+        <result property="code" column="code"/>
+        <result property="name" column="name"/>
+        <result property="brand" column="brand"/>
+        <result property="pic" column="pic"/>
+        <result property="num" column="num"/>
+        <result property="price" column="price"/>
+        <result property="intro" column="intro"/>
+        <result property="status" column="status"/>
+        <collection property="type" ofType="com.eshop.pojo.Type">
+            <id property="id" column="tyid"/>
+            <result property="name" column="tname"/>
+        </collection>
+    </resultMap>
+
+    <select id="selectByPage" resultMap="selectWithParam" parameterType="com.eshop.pojo.ProductInfo">
+        select p.*,t.id as tyid,t.name as tname from product_info as p
+        , `type` as t  where p.tid = t.id
+        <if test="code != null and code != ''">
+            and code = #{code}
+        </if>
+        <if test="name != null and name != ''">
+            and p.name like concat('%',#{name},'%')
+        </if>
+        <if test="brand != null and brand != ''">
+            and brand like concat('%',#{brand},'%')
+        </if>
+        <if test="type != null and type.id != null and type.id !=0">
+            and tid = #{type.id}
+        </if>
+        <if test="priceFrom != null and priceFrom > 0">
+            and price &gt; #{priceFrom}
+        </if>
+        <if test="priceTo != null and priceTo > 0">
+            and price &lt;= #{priceTo}
+        </if>
+    </select>
+    <select id="count" resultType="_int"  parameterType="com.eshop.pojo.ProductInfo">
+        select count(*) from product_info as p where 1=1
+        <if test="code != null and code != ''">
+            and code = #{code}
+        </if>
+        <if test="name != null and name != ''">
+            and p.name like concat('%',#{name},'%')
+        </if>
+        <if test="brand != null and brand != ''">
+            and brand like concat('%',#{brand},'%')
+        </if>
+        <if test="type != null and type.id != null and type.id !=0">
+            and tid = #{type.id}
+        </if>
+        <if test="priceFrom != null and priceFrom > 0">
+            and price &gt; #{priceFrom}
+        </if>
+        <if test="priceTo != null and priceTo > 0">
+            and price &lt;= #{priceTo}
+        </if>
+    </select>
+    <insert id="save" parameterType="com.eshop.pojo.ProductInfo" useGeneratedKeys="true" keyProperty="id">
+        insert into product_info(code,`name`,tid,brand,pic,num,price,intro,status)
+        value(#{code},#{name},#{type.id},#{brand},#{pic},#{num},#{price},#{intro},#{status})
+    </insert>
+    <update id="edit" parameterType="com.eshop.pojo.ProductInfo">
+        update product_info set code = #{code},`name`=#{name},tid=#{type.id},
+        brand=#{brand},pic=#{pic},num=#{num},price=#{price},intro=#{intro},
+        status=#{status} where id = #{id}
+    </update>
+    <update id="updateState" >
+        update product_info set status=0 where id = #{id}
+    </update>
+    <select id="getOnSaleProduct" resultType="com.eshop.pojo.ProductInfo">
+        select * from product_info where status = 1
+    </select>
+    <select id="getProductInfoById" resultType="com.eshop.pojo.ProductInfo">
+        select * from product_info where id = #{id}
+    </select>
+    <select id="getIdByCode" resultType="_int">
+        select id from product_info where code = #{code}
+    </select>
+
+</mapper>

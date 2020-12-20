@@ -1,0 +1,172 @@
+<link rel="stylesheet" href="/sys/product/product.css">
+
+<div class="layui-layout layui-layout-admin" style="padding: 20px">
+    <div class="layui-body">
+        <div style="display: flex; justify-content: space-between">
+            <form class="layui-form" action="" lay-filter="example">
+                <div class="layui-form-item">
+                    <div class="layui-inline">
+                        <label class="layui-form-label">商品编号</label>
+                        <div class="layui-input-inline" style="width: 100px;">
+                            <input type="text" id="code" autocomplete="off" class="layui-input">
+                        </div>
+                    </div>
+                    <div class="layui-inline">
+                        <label class="layui-form-label">商品名称</label>
+                        <div class="layui-input-inline" style="width: 150px;">
+                            <input type="text" id="name" autocomplete="off" class="layui-input">
+                        </div>
+                    </div>
+                    <div class="layui-inline">
+                        <label class="layui-form-label">商品类型</label>
+                        <div class="layui-input-inline">
+                            <select id="tid">
+                                <option value="0">请选择</option>
+                                <option value="1">男装</option>
+                                <option value="2">女装</option>
+                                <option value="3">视频</option>
+                                <option value="4">鞋靴</option>
+                                <option value="5">饰品</option>
+                                <option value="6">保健</option>
+                                <option value="7">生鲜</option>
+                                <option value="8">医药</option>
+                                <option value="9">数码</option>
+                                <option value="10">家居</option>
+                                <option value="11">日用</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="layui-inline">
+                        <label class="layui-form-label">商品品牌</label>
+                        <div class="layui-input-inline" style="width: 100px;">
+                            <input type="text" id="brand" autocomplete="off" class="layui-input">
+                        </div>
+                    </div>
+                    <div class="layui-inline">
+                        <label class="layui-form-label">价格</label>
+                        <div class="layui-input-inline" style="width: 100px;">
+                            <input type="text" id="priceFrom" autocomplete="off" class="layui-input lay-size=sm">
+                        </div>
+                        <div class="layui-form-mid">-</div>
+                        <div class="layui-input-inline" style="width: 100px;">
+                            <input type="text" id="priceTo" autocomplete="off" class="layui-input lay-size=sm">
+                        </div>
+                    </div>
+                    <div class="layui-inline">
+                        <div class="layui-input-inline">
+                            <button class="layui-btn" lay-submit="" lay-filter="search">查找</button>
+                        </div>
+                    </div>
+                </div>
+            </form>
+            <button class="layui-btn" onclick="add()"><i class="layui-icon">&#xe61f;</i> 添加</button>
+        </div>
+
+        <!-- 表格主体 -->
+        <table class="layui-hide" id="productTable" lay-filter="productTable"></table>
+        <script type="text/html" id="barDemo">
+            <a class="layui-btn layui-btn-xs" lay-event="edit">编辑<i class="layui-icon layui-icon-edit"></i></a>
+            <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除<i class="layui-icon layui-icon-close"></i></a>
+        </script>
+    </div>
+
+    <!--添加修改商品的form表单-->
+    <div id="setProduct" class="layer_self_wrap" style="padding:20px;display:none;">
+        <form id="productForm" class="layui-form layui-form-pane" method="post" action="">
+            <input id="id" type="hidden" name="id"/>
+            <div class="layui-form-item">
+                <label class="layui-form-label">商品状态</label>
+                <div class="layui-input-inline">
+                    <select id="productStatus" name="productStatus">
+                        <option value="1">在售</option>
+                        <option value="0">已下架</option>
+                    </select>
+                </div>
+            </div>
+            <div class="layui-form-item">
+                <label class="layui-form-label">商品类型</label>
+                <div class="layui-input-inline">
+                    <select id="productType" name="productType">
+                        <option value="0"></option>
+                        <option value="1">男装</option>
+                        <option value="2">女装</option>
+                        <option value="3">视频</option>
+                        <option value="4">鞋靴</option>
+                        <option value="5">饰品</option>
+                        <option value="6">保健</option>
+                        <option value="7">生鲜</option>
+                        <option value="8">医药</option>
+                        <option value="9">数码</option>
+                        <option value="10">家居</option>
+                        <option value="11">日用</option>
+                    </select>
+                </div>
+            </div>
+            <div class="layui-form-item">
+                <label class="layui-form-label">商品名称</label>
+                <div class="layui-input-inline">
+                    <input id="productName" name="productName" lay-verify="required" autocomplete="off" class="layui-input" type="text"/>
+                </div>
+            </div>
+            <div class="layui-form-item">
+                <label class="layui-form-label">商品编码</label>
+                <div class="layui-input-inline">
+                    <input id="productCode" name="productCode" lay-verify="required" autocomplete="off" class="layui-input" type="text"/>
+                </div>
+            </div>
+            <div class="layui-form-item">
+                <label class="layui-form-label">商品品牌</label>
+                <div class="layui-input-inline">
+                    <input id="productBrand" name="productBrand" lay-verify="required" autocomplete="off" class="layui-input" type="text"/>
+                </div>
+            </div>
+            <div class="layui-form-item">
+                <label class="layui-form-label">商品数量</label>
+                <div class="layui-input-inline">
+                    <input id="productNum" name="productNum" lay-verify="number" autocomplete="off" class="layui-input" type="text"/>
+                </div>
+            </div>
+            <div class="layui-form-item">
+                <label class="layui-form-label">商品价格</label>
+                <div class="layui-input-inline">
+                    <input id="productPrice" name="productPrice" lay-verify="number" autocomplete="off" class="layui-input" type="text"/>
+                </div>
+            </div>
+            <div class="layui-form-item">
+                <label class="layui-form-label">商品描述</label>
+                <div class="layui-input-inline">
+                    <textarea  id="productIntro" name="productIntro" lay-verify="required" autocomplete="off" class="layui-textarea" type="text"></textarea>
+                </div>
+            </div>
+            <div class="layui-form-item">
+                <label class="layui-form-label">商品图片</label>
+                <div class="layui-input-inline">
+<!--                    <div class="layui-upload">-->
+<!--                        <button type="button" class="layui-btn" id="test1">上传图片</button>-->
+<!--                        <div class="layui-upload-list">-->
+<!--                            <img class="layui-upload-img" id="productPic" name="productPic" lay-verify="required"/>-->
+<!--                        </div>-->
+<!--                    </div>-->
+                    <input id="productPic" name="productPic" lay-verify="required" autocomplete="off" class="layui-input" type="text"/>
+                </div>
+            </div>
+            <div class="layui-form-item">
+                <div class="layui-input-block" style="margin-left: 10px;text-align: center">
+                    <button class="layui-btn" lay-submit="" lay-filter="productSubmit">提交</button>
+                    <button type="reset" class="layui-btn layui-btn-primary">重置</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+<script src="/sys/product/product.js"></script>
+<script type="text/html" id="status">
+    {{#  if(d.status == 1){ }}
+    在售
+    {{#  } else { }}
+    已下架
+    {{#  } }}
+</script>
+<script type="text/html" id="type">
+    {{ d.type.name }}
+</script>

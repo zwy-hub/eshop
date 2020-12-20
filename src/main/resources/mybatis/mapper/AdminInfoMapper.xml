@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.eshop.mapper.AdminInfoMapper">
+
+<!--    <resultMap id="adminInfo" type="com.eshop.pojo.AdminInfo">-->
+<!--        <id property="id" column="id"/>-->
+<!--        <result property="name" column="name"/>-->
+<!--        <result property="pwd" column="pwd"/>-->
+<!--    </resultMap>-->
+<!--    <select id="selectByNameAndPwd" resultMap="adminInfo">-->
+<!--        select * from admin_info where name =#{name} and pwd = #{pwd}-->
+<!--    </select>-->
+    <select id="selectByNameAndPwd" resultType="com.eshop.pojo.AdminInfo">
+        select * from admin_info where name =#{name} and pwd = #{pwd}
+    </select>
+
+    <resultMap id="adminInfoIn" type="com.eshop.pojo.AdminInfo">
+        <id property="id" column="id"/>
+        <result property="name" column="name"/>
+        <result property="pwd" column="pwd"/>
+        <collection property="fs" ofType="com.eshop.pojo.Functions">
+            <id property="id" column="fid"/>
+            <result property="name" column="fname"/>
+            <result property="parentId" column="parentid"/>
+            <result property="url" column="url"/>
+            <result property="isLeaf" column="isLeaf"/>
+        </collection>
+    </resultMap>
+    <select id="selectById" resultMap="adminInfoIn">
+        select a.*,f.id as fid,f.name as fname,f.parentid,f.isleaf as isLeaf,f.url
+        from admin_info a left join powers p on a.id = p.aid
+        left join functions f on p.fid = f.id where a.id = #{id}
+    </select>
+    <select id="selectWithPage" resultMap="adminInfoIn" parameterType="com.eshop.pojo.AdminInfo">
+        select a.*,f.id as fid,f.name as fname,f.parentid,f.isleaf as isLeaf,f.url
+        from admin_info as a left join powers as p on a.id = p.aid
+        left join functions f on p.fid = f.id where 1=1
+        <if test="name != null and name != ''">
+            and a.name like concat('%',#{name},'%')
+        </if>
+    </select>
+    <insert id="add" parameterType="com.eshop.pojo.AdminInfo" useGeneratedKeys="true" keyProperty="id">
+        insert into admin_info(`name`,pwd) value (#{name},#{pwd})
+    </insert>
+    <update id="resetPwd" parameterType="_int">
+        update admin_info set pwd = '123456' where id = #{id}
+    </update>
+    <select id="getMaxId" parameterType="com.eshop.pojo.AdminInfo" resultType="_int">
+        select max(id) from admin_info
+    </select>
+
+
+    <delete id="delPowersByAId" parameterType="_int">
+        delete from powers where aid = #{aid}
+    </delete>
+    <insert id="insertPowers" parameterType="com.eshop.pojo.Powers">
+        insert into powers(aid,fid) value (#{aid},#{fid})
+    </insert>
+</mapper>
