@@ -31,13 +31,13 @@ public class PageController {
     }
 
     //商品列表页
-    @RequestMapping("/product/page")
+    @RequestMapping("/product/product")
     public String page() {
         return "sys/product/product";
     }
 
     //商品类型列表页
-    @RequestMapping("/type/page")
+    @RequestMapping("/product/type")
     public String type() {
         return "sys/product/type";
     }
@@ -55,13 +55,13 @@ public class PageController {
     }
 
     //用户列表
-    @RequestMapping("/user")
+    @RequestMapping("/user/consumer")
     public String user() {
-        return "sys/user/user";
+        return "sys/user/consumer";
     }
 
     //管理员列表
-    @RequestMapping("/admin")
+    @RequestMapping("/user/admin")
     public String admin() {
         return "sys/user/admin";
     }
