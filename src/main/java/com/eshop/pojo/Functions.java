@@ -12,7 +12,6 @@ public class Functions implements Comparable<Functions> {
     private int parentId;
     private String url;
     private boolean isLeaf;
-    private Set ais = new HashSet();
 
     @Override
     public int compareTo(Functions o) {
